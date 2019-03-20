@@ -1,9 +1,21 @@
-Export file db dengan nama db : perpus 
-atau ubah nama db pada database.php
+- Export file db dengan nama db : perpus 
 
-Url Aplikasi :
+atau ubah nama db pada database.php
+
+-Ubah Nama Folder Menjadi perpustakaan
+atau ubah file base_url pada config sesuai nama folder
+
+
+
+
+
+-Url Aplikasi :
 http://localhost/perpustakaan
 
-Autentikasi Pengguna :
+
+
+- Autentikasi Pengguna :
+  
 Username = admin
+  
 Password = 1234
