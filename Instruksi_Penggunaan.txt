@@ -1,0 +1,9 @@
+Export file db dengan nama db : perpus 
+atau ubah nama db pada database.php
+
+Url Aplikasi :
+http://localhost/perpustakaan
+
+Autentikasi Pengguna :
+Username = admin
+Password = 1234
