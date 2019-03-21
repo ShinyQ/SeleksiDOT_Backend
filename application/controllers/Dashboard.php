@@ -27,19 +27,85 @@ class Dashboard extends CI_Controller {
     }
 
     public function tambah_buku()
-    {
-       if($this->input->post('tambah')){
-             $this->dashboard->tambah_buku();
-             $this->session->set_flashdata('pesan_sukses', 'Sukses Menambah Buku');
-             redirect('dashboard');
-       }
-    }
+	{
+    if($this->input->post('submit')){
+		$this->form_validation->set_rules('nama_buku', 'nama_buku', 'trim|required');
+		$this->form_validation->set_rules('jumlah', 'jumlah', 'trim|required');
+		$this->form_validation->set_rules('id_kategori', 'id_kategori', 'trim|required');
+		$this->form_validation->set_rules('penerbit', 'penerbit', 'trim|required');
+		$this->form_validation->set_rules('tahun_terbit', 'tahun_terbit', 'trim|required');
+		$this->form_validation->set_rules('tanggal_masuk', 'tanggal_masuk', 'trim|required');
+		if ($this->form_validation->run()==TRUE) {
+			$config['upload_path'] = './assets/cover/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size']  = '2000';
+			$config['max_width']  = '5000';
+			$config['max_height']  = '5000';
+			if ($_FILES['cover_buku']['name']!="") {
+				$this->load->library('upload', $config);
+
+				if (! $this->upload->do_upload('cover_buku')) {
+					$this->session->set_flashdata('pesan', $this->upload->display_errors());
+				}else {
+					if ($this->dashboard->tambah_buku($this->upload->data('file_name'))) {
+						$this->session->set_flashdata('pesan_sukses', 'Sukses menambah buku');
+					}else{
+						$this->session->set_flashdata('pesan_gagal', 'Gagal menambah buku');
+					}
+					redirect('dashboard','refresh');
+				}
+			}else{
+				if ($this->dashboard->tambah_buku('')) {
+					$this->session->set_flashdata('pesan_sukses', 'Sukses menambah buku');
+				}else{
+					$this->session->set_flashdata('pesan_gagal', 'Gagal menambah buku');
+				}
+				redirect('dashboard','refresh');
+			}
+
+		}else{
+			$this->session->set_flashdata('pesan', validation_errors());
+			redirect('dashboard','refresh');
+		}
+  }
+	}
 
     public function edit_buku()
     {
-      $this->dashboard->edit_buku();
-      $this->session->set_flashdata('pesan_sukses', 'Sukses Mengedit Data Buku');
-      redirect('dashboard');
+      if($this->input->post('edit')){
+			if($_FILES['cover_buku']['name']==""){
+				if($this->dashboard->edit_buku()){
+					$this->session->set_flashdata('pesan_sukses', 'Sukses Edit Data');
+					redirect('dashboard','refresh');
+				} else {
+					$this->session->set_flashdata('pesan_gagal', 'Gagal Edit Data');
+					redirect('dashboard','refresh');
+				}
+			} else {
+        $config['upload_path'] = './assets/cover/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size']  = '2000';
+        $config['max_width']  = '5000';
+        $config['max_height']  = '5000';
+
+				$this->load->library('upload', $config);
+
+				if ( ! $this->upload->do_upload('cover_buku')){
+					$this->session->set_flashdata('pesan_gagal', 'Gagal Upload Foto');
+					redirect('dashboard','refresh');
+				}
+				else{
+					if($this->dashboard->edit_buku_dengan_cover($this->upload->data('file_name'))){
+						$this->session->set_flashdata('pesan_sukses', 'Sukses Edit Data');
+						redirect('dashboard','refresh');
+					} else {
+						$this->session->set_flashdata('pesan_gagal', 'Gagal update data');
+						redirect('dashboard','refresh');
+					}
+				}
+			}
+
+		}
     }
 
     public function hapus_buku()

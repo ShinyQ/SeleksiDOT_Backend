@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Mar 2019 pada 16.40
+-- Waktu pembuatan: 21 Mar 2019 pada 06.49
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.2
 
@@ -54,9 +54,11 @@ INSERT INTO `admin` (`id_admin`, `nama`, `username`, `password`) VALUES
 CREATE TABLE `buku` (
   `id_buku` int(11) NOT NULL,
   `nama_buku` varchar(50) NOT NULL,
+  `cover_buku` varchar(100) NOT NULL,
   `jumlah` int(11) NOT NULL,
   `penerbit` varchar(50) NOT NULL,
   `tahun_terbit` int(11) NOT NULL,
+  `tanggal_masuk` date NOT NULL,
   `id_kategori` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -64,14 +66,14 @@ CREATE TABLE `buku` (
 -- Dumping data untuk tabel `buku`
 --
 
-INSERT INTO `buku` (`id_buku`, `nama_buku`, `jumlah`, `penerbit`, `tahun_terbit`, `id_kategori`) VALUES
-(1, 'Kami Bukan Sarjana Kertas', 8, 'Bukune', 2019, 1),
-(2, 'Rinduku Sederas Hujan Sore Itu', 10, 'Bukune', 2017, 1),
-(5, 'Diantara Kita', 2, 'Gramedia', 2005, 2),
-(6, 'Tutorial Laravel Dasar', 2, 'mediakita', 2017, 6),
-(7, 'Sejarah Indonesia', 20, 'Erlangga', 2014, 4),
-(9, 'Melipat Jarak', 10, 'mediakita', 2005, 7),
-(10, 'Bayangan ', 4, 'mediakita', 2005, 2);
+INSERT INTO `buku` (`id_buku`, `nama_buku`, `cover_buku`, `jumlah`, `penerbit`, `tahun_terbit`, `tanggal_masuk`, `id_kategori`) VALUES
+(1, 'Kami Bukan Sarjana Kertas', 'sarjanakertas.jpg', 8, 'Bukune', 2019, '2019-03-10', 1),
+(2, 'Rinduku Sederas Hujan Sore Itu', 'hujansoreitu.jpg', 10, 'Bukune', 2017, '2019-03-07', 1),
+(5, 'Diantara Kita', '', 2, 'Gramedia', 2005, '2016-01-06', 2),
+(6, 'Tutorial Laravel Dasar', '', 2, 'mediakita', 2017, '2019-03-11', 6),
+(7, 'Sejarah Indonesia', '', 20, 'Erlangga', 2014, '2019-09-04', 4),
+(9, 'Melipat Jarak', '', 10, 'mediakita', 2005, '2018-08-15', 7),
+(10, 'Bayangan ', '', 4, 'mediakita', 2005, '2019-03-12', 2);
 
 -- --------------------------------------------------------
 

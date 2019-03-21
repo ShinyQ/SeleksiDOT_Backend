@@ -24,23 +24,30 @@ class M_dashboard extends CI_Model {
                   ->row();
   }
 
-  public function tambah_buku()
+  public function tambah_buku($cover_buku)
   {
 
-      $data = array(
-          'nama_buku' => $this->input->post('nama_buku'),
-          'jumlah'=>$this->input->post('jumlah'),
-          'penerbit'=>$this->input->post('penerbit'),
-          'tahun_terbit'=>$this->input->post('tahun_terbit'),
-          'id_kategori'=>$this->input->post('id_kategori')
-      );
-
-      $this->db->insert('buku',$data);
-        if($this->db->affected_rows()>0){
-            return TRUE;
+    if ($cover_buku=="") {
+             $object = array(
+                'nama_buku' => $this->input->post('nama_buku'),
+                'jumlah' => $this->input->post('jumlah'),
+                'id_kategori' => $this->input->post('id_kategori'),
+                'penerbit' => $this->input->post('penerbit'),
+                'tahun_terbit' => $this->input->post('tahun_terbit'),
+                'tanggal_masuk' => $this->input->post('tanggal_masuk')
+             );
         }else{
-            return FALSE;
+            $object = array(
+              'nama_buku' => $this->input->post('nama_buku'),
+              'jumlah' => $this->input->post('jumlah'),
+              'id_kategori' => $this->input->post('id_kategori'),
+              'penerbit' => $this->input->post('penerbit'),
+              'tahun_terbit' => $this->input->post('tahun_terbit'),
+              'tanggal_masuk' => $this->input->post('tanggal_masuk'),
+              'cover_buku' => $cover_buku
+             );
         }
+        return $this->db->insert('buku', $object);
   }
 
   public function edit_buku()
@@ -49,11 +56,27 @@ class M_dashboard extends CI_Model {
           'nama_buku' => $this->input->post('nama_buku'),
           'jumlah'=>$this->input->post('jumlah'),
           'penerbit'=>$this->input->post('penerbit'),
-          'tahun_terbit'=>$this->input->post('tahun_terbit')
+          'tahun_terbit'=>$this->input->post('tahun_terbit'),
+          'tanggal_masuk'=>$this->input->post('tanggal_masuk')
       );
 
       return $this->db->where('id_buku', $this->input->post('id_buku'))
                   ->update('buku', $data);
+  }
+
+  public function edit_buku_dengan_cover($cover_buku)
+  {
+    $data = array(
+        'nama_buku' => $this->input->post('nama_buku'),
+        'jumlah'=>$this->input->post('jumlah'),
+        'penerbit'=>$this->input->post('penerbit'),
+        'tahun_terbit'=>$this->input->post('tahun_terbit'),
+        'tanggal_masuk'=>$this->input->post('tanggal_masuk'),
+        'cover_buku'=> $cover_buku
+    );
+
+      return $this->db->where('id_buku', $this->input->post('id_buku'))
+                      ->update('buku', $data);
   }
 
   public function hapus_buku(){
